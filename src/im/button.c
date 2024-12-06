@@ -5,7 +5,7 @@ typedef struct {
 	void(*onClickFn)();
 } im_button_t;
 
-void p_imdestroy_button(im_button_t *button) {
+void imdestroy_button(im_button_t *button) {
 	free(button);
 }
 
@@ -23,6 +23,6 @@ imwidget_t imcreate_button(const char* label, void(*onClickFn)()) {
 		.ptr = button,
 		.drawFn = NULL,
 		.passeventFn = NULL,
-		.destroyFn = &p_imdestroy_button,
+		.destroyFn = (imdestroy_t*)&imdestroy_button,
 	};
 }

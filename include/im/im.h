@@ -3,15 +3,25 @@
 
 #include <SDL2/SDL.h>
 
+#ifndef NDEBUG
+	#define imassert(condition)					\
+		if ((condition) == 0) {					\
+			imerror("%s:%d: %s: imassert(%s) failed", __FILE__, __LINE__, __func__, #condition);\
+			exit(-1);							\
+		}
+#else
+	#define imassert(condition) (void)(condition);
+#endif
+
 void iminfo(const char* format, ...);
 void imwarn(const char* format, ...);
 void imerror(const char* format, ...);
 
-// TODO
-int iminit(const char* title);
-int imdeinit();
-
 typedef struct struct_imwidget imwidget_t;
+
+// Requires SDL2 to be intialized
+// Returns 0 on success
+int imlaunchwindow(imwidget_t widget, const char* title);
 
 typedef void(imdraw_t)(void*, SDL_Rect);
 void imdraw(imwidget_t widget, SDL_Rect rect);
