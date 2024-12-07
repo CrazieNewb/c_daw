@@ -1,7 +1,7 @@
 #ifndef IM_H
 #define IM_H
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #ifndef NDEBUG
 	#define imassert(condition)					\
