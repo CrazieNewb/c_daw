@@ -17,17 +17,16 @@ BIN_DIR := bin/
 # No need to change anything below here in normal use cases
 #
 
-CFLAGS := -Wall -Wextra -std=c99 -Wno-missing-braces
+CFLAGS := -Wall -Wextra -std=c11 -Wno-missing-braces
+# REMARKS: SDL2 folder structure may be different to yours
 CFLAGS += -I$(SDL_DIR)include/ -I$(INCLUDE_DIR)
-# REMARKS: SDL2 folder structure may change
 LDFLAGS := -L$(SDL_DIR)lib/x64/
 
 LIBS := -lSDL2 -lSDL2main
-# These two are all for SDL2 to work on windows
+# Libraries for SDL2 to work on windows
 LIBS += -lole32 -loleaut32 -limm32 -lversion -lShell32
 LIBS += -lgdi32 -lwinmm -lsetupapi -luser32 -lkernel32
 
-# Two wildcards because /**/*c doesnt capture /*.c
 SRCS := $(wildcard $(SRC_DIR)*.c) $(wildcard $(SRC_DIR)**/*.c)
 
 DEBUG_FLAGS := -g -O1 -UNDEBUG -Xlinker /subsystem:console
@@ -39,5 +38,3 @@ debug:
 
 release:
 	$(CC) -o $(BIN_DIR)$@.exe $(SRCS) $(RELEASE_FLAGS) $(CFLAGS) $(LDFLAGS) $(LIBS)
-
-.PHONY: debug release

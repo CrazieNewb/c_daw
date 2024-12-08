@@ -2,6 +2,7 @@
 #define IM_H
 
 #include <SDL.h>
+#include <stdarg.h>
 
 #ifndef NDEBUG
 	#define imassert(condition)					\
@@ -13,6 +14,13 @@
 	#define imassert(condition) (void)(condition);
 #endif
 
+typedef void(imlogcallback_t)(uint8_t, uint8_t, uint8_t, const char*, const char*, va_list);
+
+// Set callback that `iminfo`, `imwarn` and `imerror` uses
+// If callback is `NULL` it defaults to console
+// Default callback has no thread safety
+void imsetlogcallback(imlogcallback_t* callback);
+
 void iminfo(const char* format, ...);
 void imwarn(const char* format, ...);
 void imerror(const char* format, ...);
@@ -20,7 +28,7 @@ void imerror(const char* format, ...);
 typedef struct struct_imwidget imwidget_t;
 
 // Requires SDL2 to be intialized
-// Returns 0 on success
+// Returns 0 on success; Logs its own errors
 int imlaunchwindow(imwidget_t widget, const char* title);
 
 typedef void(imdraw_t)(void*, SDL_Rect);
